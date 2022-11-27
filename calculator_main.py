@@ -33,10 +33,10 @@ class Main(QDialog):
         button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
         ### 사칙연산 버튼을 layout_operation 레이아웃에 추가s
-        layout_button.addWidget(button_plus, 0, 3)
-        layout_button.addWidget(button_minus,1, 3)
-        layout_button.addWidget(button_product, 2, 3)
-        layout_button.addWidget(button_division, 3, 3)
+        layout_button.addWidget(button_plus, 3, 3)
+        layout_button.addWidget(button_minus,2, 3)
+        layout_button.addWidget(button_product, 1, 3)
+        layout_button.addWidget(button_division, 0, 3)
 
         ### =, clear, backspace 버튼 생성
         button_equal = QPushButton("=")
@@ -51,7 +51,7 @@ class Main(QDialog):
         ### =, clear, backspace 버튼을 layout_clear_equal 레이아웃에 추가
         layout_button.addWidget(button_clear, 0, 0)
         layout_button.addWidget(button_backspace, 0, 1)
-        layout_button.addWidget(button_equal, 0, 2)
+        layout_button.addWidget(button_equal, 4, 3)
 
         ### 숫자 버튼 생성하고, layout_number 레이아웃에 추가
         ### 각 숫자 버튼을 클릭했을 때, 숫자가 수식창에 입력 될 수 있도록 시그널 설정
@@ -60,9 +60,17 @@ class Main(QDialog):
             number_button_dict[number] = QPushButton(str(number))
             number_button_dict[number].clicked.connect(lambda state, num = number:
                                                        self.number_button_clicked(num))
-            if number >0:
+            if number > 0:
                 x,y = divmod(number-1, 3)
-                layout_button.addWidget(number_button_dict[number], x+1, y)
+                if(x == 0):
+                    x += 2
+                    layout_button.addWidget(number_button_dict[number], x+1, y)
+                elif(x == 1):
+                    layout_button.addWidget(number_button_dict[number], x + 1, y)
+                elif(x == 2):
+                    x = 0
+                    layout_button.addWidget(number_button_dict[number], x + 1, y)
+
             elif number==0:
                 layout_button.addWidget(number_button_dict[number], 4, 1)
 
