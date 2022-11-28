@@ -1,7 +1,8 @@
 import sys
 from PyQt5.QtWidgets import *
 import math
-### 모든 이슈 해결 ###
+### 모든 이슈 해결2 ###
+
 class Main(QDialog):
     def __init__(self):
         super().__init__()
