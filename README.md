@@ -4,12 +4,12 @@
 #### 프로젝스 설치 방법
 
 
-##1. Pyqt 설치
+## 1. Pyqt 설치
 ```
 conda install -c anaconda pyqt
 python calculator_main.py
 ```
-##2. Python IDE로 실행
+## 2. Python IDE로 실행
 
 
 ## Contributing
