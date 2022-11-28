@@ -10,7 +10,7 @@ conda install -c anaconda pyqt
 python calculator_main.py
 ```
 ## Python IDE로 실행
-
+Pycharm, vscode 등 python ide에서 실행하시면 됩니다.
 
 ### 2. Authors
 
