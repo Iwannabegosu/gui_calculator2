@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
+import math
 
 class Main(QDialog):
     def __init__(self):
@@ -83,13 +84,21 @@ class Main(QDialog):
         button_double_zero.clicked.connect(lambda state, num = "00": self.number_button_clicked(num))
         layout_button.addWidget(button_double_zero, 5, 0)
 
-        # % CE C 1/x x^2 제곱근
+        # CE C 1/x x^2 제곱근
         button_remainder = QPushButton("%")
         button_CE = QPushButton("CE")
         button_C = QPushButton("C")
         button_oneperx = QPushButton("1/x")
         button_square = QPushButton("x²")
         button_root = QPushButton("√x")
+
+        # 시그널 설정
+        button_remainder.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
+        button_CE.clicked.connect(self.button_CE_clicked)
+        button_C.clicked.connect(self.button_C_clicked)
+        button_oneperx.clicked.connect(self.button_oneperx_clicked)
+        button_square.clicked.connect(self.button_square_clicked)
+        button_root.clicked.connect(self.button_root_clicked)
 
         # 새 버튼 그리드에 추가
         layout_button.addWidget(button_remainder, 0, 0)
@@ -113,7 +122,10 @@ class Main(QDialog):
     def number_button_clicked(self, num):
         # 0 이면 지움
         if self.equation_solution.text() == '0':
-            self.equation_solution.setText("")
+            if num == '.':
+                pass
+            else:
+                self.equation_solution.setText("")
 
         equation = self.equation_solution.text()
         equation += str(num)
@@ -136,7 +148,35 @@ class Main(QDialog):
         equation = self.equation_solution.text()
         equation = equation[:-1]
         self.equation_solution.setText(equation)
-        
+
+    # % 연산자 button
+
+    def button_CE_clicked(self):
+        self.equation_solution.setText("0")
+
+    def button_C_clicked(self):
+        self.equation_solution.setText("0")
+
+    def button_oneperx_clicked(self):
+        equation = self.equation_solution.text()
+        equation = float(equation)
+        equation = 1/equation
+        equation = str(equation)
+        self.equation_solution.setText(equation)
+    def button_square_clicked(self):
+        equation = self.equation_solution.text()
+        equation = float(equation)
+        equation = equation ** 2
+        equation = str(equation)
+        self.equation_solution.setText(equation)
+
+    def button_root_clicked(self):
+        equation = self.equation_solution.text()
+        equation = float(equation)
+        equation = equation ** 0.5
+        equation = str(equation)
+        self.equation_solution.setText(equation)
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main = Main()
