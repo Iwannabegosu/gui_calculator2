@@ -1,20 +1,15 @@
 # GUI Calculator
 
 
-## 프로젝스 설치 방법
+#### 프로젝스 설치 방법
 
 
-1. Pyqt를 설치한다.
-2. calculator_main.py를 실행한다.
+##1. Pyqt 설치
 ```
 conda install -c anaconda pyqt
 python calculator_main.py
 ```
-
-
-
-## 프로젝스 사용 방법
-일반 계산기 처럼 사용하면 됨
+##2. Python IDE로 실행
 
 
 ## Contributing
