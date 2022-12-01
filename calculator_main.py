@@ -4,8 +4,14 @@ import math
 ### 모든 이슈 해결2 ###
 
 class Main(QDialog):
+
     def __init__(self):
         super().__init__()
+        self.idx = -1
+        self.check =0
+        self.elist = [0, 0]
+        self.equal = 0
+        self.opr = ""
         self.init_ui()
 
     def init_ui(self):
@@ -16,7 +22,7 @@ class Main(QDialog):
         layout_equation_solution = QFormLayout()
 
         ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
-        self.equation_solution = QLineEdit("0")
+        self.equation_solution = QLineEdit('')
 
         ### layout_equation_solution 레이아웃에 수식, 답 위젯을 추가
         layout_equation_solution.addRow(self.equation_solution)
@@ -121,26 +127,91 @@ class Main(QDialog):
     ### functions ###
     #################
     def number_button_clicked(self, num):
-        # 0 이면 지움
-        if self.equation_solution.text() == '0':
-            if num == '.':
-                pass
-            else:
-                self.equation_solution.setText("")
-
+        # get lineedit
         equation = self.equation_solution.text()
-        equation += str(num)
-        self.equation_solution.setText(equation)
+
+        if self.check == 1:
+            equation = str(num)
+            self.equation_solution.setText(equation)
+            self.check = 0
+        else:
+            equation += str(num)
+            self.equation_solution.setText(equation)
 
     def button_operation_clicked(self, operation):
+        self.check = 1 # operator가 입력됐는지
+
         equation = self.equation_solution.text()
-        equation += operation
-        self.equation_solution.setText(equation)
+
+        if self.idx < 0: # 처음 연산자를 받는다면
+            self.idx += 1
+            self.elist[self.idx] = equation
+            self.opr = operation
+        else:
+            if self.equal == 0:
+                self.idx += 1
+                self.elist[self.idx] = equation
+                # 연산
+                if self.opr == "+":
+                    for i in range(2):
+                        self.elist[i] = float(self.elist[i])
+                    result = self.elist[0] + self.elist[1]
+                elif self.opr == "-":
+                    for i in range(2):
+                        self.elist[i] = float(self.elist[i])
+                    result = self.elist[0] - self.elist[1]
+                elif self.opr == "*":
+                    for i in range(2):
+                        self.elist[i] = float(self.elist[i])
+                    result = self.elist[0] * self.elist[1]
+                elif self.opr == "/":
+                    for i in range(2):
+                        self.elist[i] = float(self.elist[i])
+                    result = self.elist[0] / self.elist[1]
+                elif self.opr == "%":
+                    for i in range(2):
+                        self.elist[i] = float(self.elist[i])
+                    result = self.elist[0] % self.elist[1]
+
+                self.opr = operation
+                self.idx = 0
+                self.elist[self.idx] = str(result)
+
+                self.equation_solution.setText(self.elist[0])
+            else:
+                self.equal = 0
+                self.opr = operation
+                print(1)
+
 
     def button_equal_clicked(self):
         equation = self.equation_solution.text()
-        solution = eval(equation)
-        self.equation_solution.setText(str(solution))
+        self.equal = 1
+        self.elist[1] = equation
+        if self.opr == "+":
+            for i in range(2):
+                self.elist[i] = float(self.elist[i])
+            result = self.elist[0] + self.elist[1]
+        elif self.opr == "-":
+            for i in range(2):
+                self.elist[i] = float(self.elist[i])
+            result = self.elist[0] - self.elist[1]
+        elif self.opr == "*":
+            for i in range(2):
+                self.elist[i] = float(self.elist[i])
+            result = self.elist[0] * self.elist[1]
+        elif self.opr == "/":
+            for i in range(2):
+                self.elist[i] = float(self.elist[i])
+            result = self.elist[0] / self.elist[1]
+        elif self.opr == "%":
+            for i in range(2):
+                self.elist[i] = float(self.elist[i])
+            result = self.elist[0] % self.elist[1]
+
+        self.idx = 0
+        self.elist[self.idx] = str(result)
+        self.equation_solution.setText(self.elist[0])
 
     def button_clear_clicked(self):
         self.equation_solution.setText("")
@@ -153,10 +224,21 @@ class Main(QDialog):
     # % 연산자 button
 
     def button_CE_clicked(self):
-        self.equation_solution.setText("0")
+        self.equation_solution.setText("")
+        # memory 초기화
+        self.elist[0] = 0
+        self.elist[1] = 0
 
+        # idx 초기화
+        self.idx = -1
     def button_C_clicked(self):
-        self.equation_solution.setText("0")
+        self.equation_solution.setText("")
+        # memory 초기화
+        self.elist[0] = 0
+        self.elist[1] = 0
+
+        # idx 초기화
+        self.idx = -1
 
     def button_oneperx_clicked(self):
         equation = self.equation_solution.text()
