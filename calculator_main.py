@@ -1,7 +1,9 @@
 import sys
 from PyQt5.QtWidgets import *
 import math
-### 모든 이슈 해결2 ###
+# 모든 이슈 해결2
+# 이항 연산자 수정
+# 모든 문제 해결
 
 class Main(QDialog):
 
